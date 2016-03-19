@@ -5,7 +5,7 @@ InitOpt *genInitOpt() {
     InitOpt *sample = (InitOpt*) malloc(sizeof(InitOpt));
 
     sample->match_str         = NULL;
-    sample->query_mode        = "single word";
+    sample->query_mode        = "single_word";
     sample->rank_mode         = "desc";
     sample->match_mode        = "prefix";
     sample->begin_at          = "id";
@@ -90,4 +90,5 @@ void printArgs(InitOpt *init_opt) {
     printf("\tinsensitive: %d\n", init_opt->insensitive);
     printf("\toutput_size: %d(byte)\n", init_opt->output_size);
     printf("\toutput_length: %d\n", init_opt->output_length);
+    printf("---------------\n");
 }

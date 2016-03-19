@@ -6,8 +6,8 @@
 
 // parser -> init
 typedef struct Init_Struct {
-    char *match_str;       // Data of matching string
-    char *query_mode;      // Define the query mode('single word', 'boolean' or 'multiterm').
+    char *match_str;       // Data of matching string. Pattern: A or A|B|C or +A,-B,+C
+    char *query_mode;      // Define the query mode('single_word', 'boolean' or 'multiterm').
     char *rank_mode;       // Define the ranking mode('asc' or 'desc').
     char *match_mode;      // Define the match mode(prefix or word).
     char *begin_at;        // The column that each record begins at.
@@ -27,7 +27,7 @@ typedef struct Job_Ctl_Struct {
     char *begin_at;
     float error_rate;
     int insensitive;
-    int match_strs_num;    // number of matching strings
+    int match_str_num;    // number of contained strings
 } JobOpt;
 
 // jobControl -> threadCtl
@@ -37,7 +37,7 @@ typedef struct Thread_Ctl_Struct {
     char *match_mode;
     char *begin_at;
     float error_rate;
-    int match_strs_num;
+    int match_str_num;
     int insensitive;
 } ThreadOpt;
 
@@ -49,7 +49,7 @@ typedef struct Matching_Opt {
     char **match_strs;
     char *match_mode;
     float error_rate;
-    int match_strs_num;
+    int match_str_num;
     int insensitive;
 
     // for scoring
