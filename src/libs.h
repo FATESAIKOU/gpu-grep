@@ -1,7 +1,7 @@
-#include "lib/hostInc.h"
-#include "lib/kernelInc.h"
-#include "lib/deviceInc.h"
+#include "lib/host/parser.h"
+#include "lib/host/init.h"
+#include "lib/host/jobControl.h"
+#include "lib/host/ranker.h"
+#include "lib/host/packer.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "lib/kernel/threadCtl.h"

@@ -1,16 +1,22 @@
+#define CMN_INCLUDED
+
+// some var defination
+#define COLUMN_NUM 12
+#define COLUMNS (char*[12]) { "id", "published", "updated", "title", "content", "author", "keyword", "favoriate", "view", "duration", "category", "src" }
 
 // parser -> init
 typedef struct Init_Struct {
-    char *match_str;     // Data of matching string
-    char *query_mode;    // Define the query mode('single word', 'boolean' or 'multiterm').
-    char *rank_mode;     // Define the ranking mode('asc' or 'desc').
-    char *match_mode;    // Define the match mode(prefix or word).
-    char *begin_at;      // The column that each record begins at.
-    char *output_column; // Define the output column.
-    float error_rate;    // Define the lower bound of tolerable error rate.
-    int insensitive;     // Is insensitive to alpha case?
-    int output_size;     // Define the output size.
-    int output_length;   // The length of output record.
+    char *match_str;       // Data of matching string
+    char *query_mode;      // Define the query mode('single word', 'boolean' or 'multiterm').
+    char *rank_mode;       // Define the ranking mode('asc' or 'desc').
+    char *match_mode;      // Define the match mode(prefix or word).
+    char *begin_at;        // The column that each record begins at.
+    char **output_column;  // Define the output column.
+    int output_column_num; // Number of the output column.
+    float error_rate;      // Define the lower bound of tolerable error rate.
+    int insensitive;       // Is insensitive to alpha case?
+    int output_size;       // Define the output size.
+    int output_length;     // The length of output record.
 } InitOpt;
 
 // init -> jobControl
@@ -82,6 +88,7 @@ typedef struct Ranking_info {
 typedef struct Packing_Opt {
     char ***result_records;
     char **output_column; // passthrough gpu?
+    int output_column_num;
     int output_size;
     int output_length;
 } PackOpt;

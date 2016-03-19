@@ -1,9 +1,11 @@
+#include "commonInc.h"
 #include "libs.h"
-#include "cmncateStruct.h"
 
 int main(int argc, char *argv[])
 {
-    printf("hello world!!\n");
+    InitOpt *init_opt = (InitOpt*)parseArgs(argc, argv);
+
+    printArgs((InitOpt*)init_opt);
 
     return 0;
 }
