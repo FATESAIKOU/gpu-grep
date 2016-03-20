@@ -1,7 +1,9 @@
-#ifndef CMN_INCLUDED
+#ifndef JOBCTL_INCLUDED
+#define JOBCTL_INCLUDED
 #include "../../cmncateStruct.h"
-#endif
 
 ThreadOpt *genThreadOpt(JobOpt *job_opt);
 
 void printThreadArgs(ThreadOpt *thread_opt);
+
+#endif

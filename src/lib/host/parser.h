@@ -1,6 +1,6 @@
-#ifndef CMN_INCLUDED
+#ifndef PARSER_INCLUDED
+#define PARSER_INCLUDED
 #include "../../cmncateStruct.h"
-#endif
 
 InitOpt *genInitOpt();
 
@@ -11,3 +11,5 @@ InitOpt *parseArgs(int argc, char *argv[]);
 int checkOpt(InitOpt *init_opt);
 
 void printArgs(InitOpt *init_opt);
+
+#endif

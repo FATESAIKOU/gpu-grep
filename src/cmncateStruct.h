@@ -1,3 +1,4 @@
+#ifndef CMN_INCLUDED
 #define CMN_INCLUDED
 
 // some var defination
@@ -58,9 +59,9 @@ typedef struct Matching_Opt {
 // 2. Data
 typedef struct Matching_Base {
     char ***sample_records;    // All of the sample records.
-    char **sample_column_name; // All of sample column name.
-    int sample_length;
-    int sample_col_num;        // number of sample columns.
+    //char **sample_column_name; // All of sample column name.
+    int record_num;
+    //int column_num;        // number of sample columns.
 } MatchBase;
 
 // ThreadId = 1~255 -> ThreadId = 0
@@ -92,3 +93,5 @@ typedef struct Packing_Opt {
     int output_size;
     int output_length;
 } PackOpt;
+
+#endif

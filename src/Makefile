@@ -5,7 +5,7 @@
 # GNU compilation info
 CC     = gcc
 INC    = -Iinc
-CCFLAG =
+CCFLAGS =
 
 # Nvidia compilation info
 NVCC   = nvcc
@@ -29,7 +29,7 @@ $(OBJ)/%.o: $(HOST)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(OBJ)/%.o: $(KERNEL)/%.cu
-	$(NVCC) -c -o $@ $< $(CFLAGS)
+	$(NVCC) -c -o $@ $<
 
 $(OBJ)/%.o: $(DEVICE)/%.cu
 	$(NVCC) -c -o $@ $< $(CFLAGS)

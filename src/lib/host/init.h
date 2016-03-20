@@ -1,6 +1,6 @@
-#ifndef CMN_INCLUDED
+#ifndef INIT_INCLUDED
+#define INIT_INCLUDED
 #include "../../cmncateStruct.h"
-#endif
 
 typedef struct Matching_Str_Info {
     char *str_relations; // store the additional flags of matching(Ex ['|', '&'], ['-', '+'])
@@ -20,3 +20,5 @@ StrInfo *parseMatchStrs(char *str, const char *query_mode);
 JobOpt *setupJobArgs(InitOpt *init_opt);
 
 void printJobArgs(JobOpt *job_opt);
+
+#endif
