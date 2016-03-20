@@ -17,6 +17,17 @@ int main(int argc, char *argv[])
     MatchOpt *match_opt = (MatchOpt*) genMatchOpt(thread_opt);
     MatchBase *match_base = (MatchBase*) genMatchBase(filename);
 
+    // Gen by threadCtl
+    // RankInfo *rank_info = (RankInfo*) matchRecords(match_opt, match_base);
+
+    // Gen by ranker
+    // PackInfo *pack_Info = (PackInfo*) rankResult(rank_info);
+
+    // Gen by packer
+    // Result *result = (Result*) packResult(pack_info);
+    //
+    // return result
+
     printf("success!!\n");
 
     return 0;

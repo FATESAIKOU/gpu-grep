@@ -86,12 +86,20 @@ typedef struct Ranking_info {
 } RankInfo;
 
 // ranker -> packer
-typedef struct Packing_Opt {
+typedef struct Packing_Info {
     char ***result_records;
     char **output_column; // passthrough gpu?
     int output_column_num;
     int output_size;
     int output_length;
-} PackOpt;
+} PackInfo;
+
+// packer -> outpur
+typedef struct Result {
+    char ***result_records;
+    char **result_columns;
+    int result_records_num;
+    int result_column_num;
+} Result;
 
 #endif

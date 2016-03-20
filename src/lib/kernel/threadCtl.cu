@@ -1,5 +1,6 @@
 #include "../../cmncateStruct.h"
 #include "../../commonInc.h"
+#include "../device/matching.h"
 
 // define
 
@@ -7,13 +8,15 @@ extern "C" MatchOpt *genMatchOpt(ThreadOpt *thread_opt);
 
 extern "C" MatchBase *genMatchBase(char *filename);
 
+extern "C" void readFile(char *filename, MatchBase *match_base);
+
+extern "C" RankInfo *matchRecords(MatchOpt *match_opt, MatchBase *match_base);
+
 __host__ char *ungets(char *str, FILE *fptr);
 
 __host__ char *getAttribute(FILE *fptr, char *end_str);
 
 __host__ char **getRecord(FILE *fptr);
-
-extern "C" void readFile(char *filename, MatchBase *match_base);
 
 // implement
 
@@ -110,5 +113,9 @@ extern "C" void readFile(char *filename, MatchBase *match_base) {
 
     match_base->sample_records = records;
     match_base->record_num = i;
+}
+
+extern "C" RankInfo *matchRecords(MatchOpt *match_opt, MatchBase *match_base) {
+    return NULL;
 }
 
