@@ -11,6 +11,10 @@ CCFLAGS =
 NVCC   = nvcc
 CUDA_LIB = -lcudart -L/usr/local/cuda/lib64
 
+# flex compilation info
+LEX = flex
+LEX_LIB = -ll
+
 # defination of each lib path
 HOST   = ./lib/host
 KERNEL = ./lib/kernel
@@ -25,18 +29,23 @@ D_LIB = matching
 OUT = ./gpu-grep
 OBJ = ./
 
+$(OUT): main.c $(patsubst %, %.o, $(H_LIB) $(K_LIB) $(D_LIB)) fileParser.o
+	$(CC) -o $@ $^ $(CUDA_LIB) $(LEX_LIB)
+	rm -f *.o
+
 $(OBJ)/%.o: $(HOST)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-$(OBJ)/%.o: $(KERNEL)/%.cu
-	$(NVCC) -c -o $@ $<
+threadCtl.o: $(KERNEL)/threadCtl.c
+	$(CC) -c -o $@ $< $(LEX_LIB)
 
-$(OBJ)/%.o: $(DEVICE)/%.cu
+matching.o: $(DEVICE)/matching.cu
 	$(NVCC) -c -o $@ $< $(CFLAGS)
 
-$(OUT): main.c $(patsubst %, %.o, $(H_LIB) $(K_LIB) $(D_LIB))
-	$(CC) -o $@ $^ $(CUDA_LIB)
-	rm -f $(shell ls *.o)
+fileParser.o: ./flex/fileParser.l
+	$(LEX) -o ./flex/fileParser.c $<
+	$(CC) -c -o $@ ./flex/fileParser.c -ll
 
 clean:
-	rm -f gpu-grep *.o
+	rm -f gpu-grep *.o ./flex/fileParser.c
+

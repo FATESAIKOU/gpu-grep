@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
     MatchOpt *match_opt = (MatchOpt*) genMatchOpt(thread_opt);
     MatchBase *match_base = (MatchBase*) genMatchBase(filename);
 
+    printf("test %s\n", match_base->sample_records[0][0]);
+
     // Gen by threadCtl
     // RankInfo *rank_info = (RankInfo*) matchRecords(match_opt, match_base);
 
