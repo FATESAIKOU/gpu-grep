@@ -31,7 +31,7 @@ OBJ = ./
 
 $(OUT): main.c $(patsubst %, %.o, $(H_LIB) $(K_LIB) $(D_LIB)) fileParser.o
 	$(CC) -o $@ $^ $(CUDA_LIB) $(LEX_LIB)
-	rm -f *.o
+	rm -f *.o ./flex/fileParser.c
 
 $(OBJ)/%.o: $(HOST)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)

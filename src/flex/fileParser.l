@@ -19,20 +19,19 @@
 
 %%
 ^@id:.*            { getAttribute(yytext, 1);}
-^@published:.*     { getAttribute(yytext, 0);}
-^@updated:.*       { getAttribute(yytext, 0);}
 ^@title:.*         { getAttribute(yytext, 0);}
+^@published:.*     { getAttribute(yytext, 0);}
 ^@content:.*       { getAttribute(yytext, 0);}
+^@category:.*      { getAttribute(yytext, 0);}
+^@duration:.*      { getAttribute(yytext, 0);}
+^@favoriteCount:.* { getAttribute(yytext, 0);}
+^@$viewCount:.*    { getAttribute(yytext, 0);}
 ^@author:.*        { getAttribute(yytext, 0);}
 ^@keyword:.*       { getAttribute(yytext, 0);}
-^@favoriteCount:.* { getAttribute(yytext, 0);}
-^@viewCount:.*     { getAttribute(yytext, 0);}
-^@duration:.*      { getAttribute(yytext, 0);}
-^@category:.*      { getAttribute(yytext, 0);}
-^@src:.*           { getAttribute(yytext, 0);}
+^@_uid:.*          { getAttribute(yytext, 0);}
 
 ^@\n    {}
-.*   {}
+.*  {}
 
 %%
 
