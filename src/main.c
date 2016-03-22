@@ -1,7 +1,7 @@
 #include "commonInc.h"
 #include "libs.h"
 
-int main(int argc, char *argv[])
+Result *main(int argc, char *argv[])
 {
     char *filename = argv[1];
 
@@ -17,18 +17,19 @@ int main(int argc, char *argv[])
     MatchOpt *match_opt = (MatchOpt*) genMatchOpt(thread_opt);
     MatchBase *match_base = (MatchBase*) genMatchBase(filename);
 
+    // Gen by matching
+    MatchRes *match_res = (MatchRes*) matchRecords(match_opt, match_base);
+
     // Gen by threadCtl
-    // RankInfo *rank_info = (RankInfo*) matchRecords(match_opt, match_base);
+    RankInfo *rank_info = (RankInfo*) genRankInfo(match_res, init_opt);
 
     // Gen by ranker
-    // PackInfo *pack_Info = (PackInfo*) rankResult(rank_info);
+    PackInfo *pack_info = (PackInfo*) genPackInfo(rank_info);
 
     // Gen by packer
-    // Result *result = (Result*) packResult(pack_info);
-    //
-    // return result
+    Result *result = (Result*) genPackResult(pack_info);
 
     printf("success!!\n");
 
-    return 0;
+    return result;
 }

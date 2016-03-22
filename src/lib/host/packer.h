@@ -1,5 +1,6 @@
 #ifndef PACKER_INCLUDED
 #define PACKER_INCLUDED
-#include "../../cmncateStruct.h"
+
+Result *genPackResult(PackInfo *pack_info);
 
 #endif

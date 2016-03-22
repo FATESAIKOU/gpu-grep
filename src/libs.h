@@ -8,4 +8,6 @@
 
 #include "lib/kernel/threadCtl.h"
 
+#include "lib/device/matching.h"
+
 #endif

@@ -1,5 +1,6 @@
 #ifndef RANKER_INCLUDED
 #define RANKER_INCLUDED
-#include "../../cmncateStruct.h"
+
+PackInfo *genPackInfo(RankInfo *rank_info);
 
 #endif

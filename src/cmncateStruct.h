@@ -69,7 +69,7 @@ typedef struct Matching_Counter {
     int **matched_count; // x = matched_count[i][j] stand for a word(id = i) appeared in column(id = j) x times.
 } MatchCount;
 
-// matching -> threadCtl (callback)
+// matching -> threadCtl
 typedef struct Matching_Result {
     char ***result_records; // All of the result records
     int *scores;
@@ -83,6 +83,7 @@ typedef struct Ranking_info {
     int *scores;
     int result_length;
     int result_col_num;
+    char *rank_mode;
 } RankInfo;
 
 // ranker -> packer
