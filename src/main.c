@@ -24,7 +24,7 @@ Result *main(int argc, char *argv[])
     RankInfo *rank_info = (RankInfo*) genRankInfo(match_res, init_opt);
 
     // Gen by ranker
-    PackInfo *pack_info = (PackInfo*) genPackInfo(rank_info);
+    PackInfo *pack_info = (PackInfo*) genPackInfo(rank_info, init_opt);
 
     // Gen by packer
     Result *result = (Result*) genPackResult(pack_info);
