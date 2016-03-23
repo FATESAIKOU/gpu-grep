@@ -38,13 +38,15 @@ RankInfo *genRankInfo(MatchRes *match_result, InitOpt *init_opt) {
     RankInfo *rank_info = (RankInfo*) malloc(sizeof(RankInfo));
 
     // 1. get result_records from match_result
-    //  (i) rank_info->result_records = match_result->result_records;
-    // 2. get result_length from match_result
-    //  (i)rank_info->result_length = match_result->result_length;
-    // 3. get rank_mode from init_opt
-    //  (i)rank_info->rank_mode = init_opt->rank_mode;
-    // 4. return rank_info
+    rank_info->result_records = match_result->result_records;
 
+    // 2. get result_length from match_result
+    rank_info->result_length = match_result->result_length;
+
+    // 3. get rank_mode from init_opt
+    rank_info->rank_mode = init_opt->rank_mode;
+
+    // 4. return rank_info
     return rank_info;
 }
 

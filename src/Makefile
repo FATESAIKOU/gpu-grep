@@ -30,17 +30,17 @@ OUT = ./gpu-grep
 OBJ = ./
 
 $(OUT): main.c $(patsubst %, %.o, $(H_LIB) $(K_LIB) $(D_LIB)) fileParser.o
-	$(CC) -o $@ $^ $(CUDA_LIB) $(LEX_LIB)
+	$(CC) -g -o $@ $^ $(CUDA_LIB) $(LEX_LIB)
 	rm -f *.o ./flex/fileParser.c
 
 $(OBJ)/%.o: $(HOST)/%.c
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -g -c -o $@ $< $(CFLAGS)
 
 threadCtl.o: $(KERNEL)/threadCtl.c
-	$(CC) -c -o $@ $< $(LEX_LIB)
+	$(CC) -g -c -o $@ $< $(LEX_LIB)
 
 matching.o: $(DEVICE)/matching.cu
-	$(NVCC) -c -o $@ $< $(CFLAGS)
+	$(NVCC) -g -c -o $@ $< $(CFLAGS)
 
 fileParser.o: ./flex/fileParser.l
 	$(LEX) -o ./flex/fileParser.c $<

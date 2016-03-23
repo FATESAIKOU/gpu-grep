@@ -29,7 +29,10 @@ Result *main(int argc, char *argv[])
     // Gen by packer
     Result *result = (Result*) genPackResult(pack_info);
 
+    printf("result %s\n", result->result_records[0]->record[0]);
+    printf("score %d\n", result->result_records[0]->score);
+
     printf("success!!\n");
 
-    return result;
+    return NULL;
 }

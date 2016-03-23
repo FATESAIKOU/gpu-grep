@@ -12,9 +12,7 @@ int cmp_desc(const void *a, const void *b);
 PackInfo *genPackInfo(RankInfo *rank_info, InitOpt *init_opt) {
     PackInfo *pack_info = (PackInfo*) malloc(sizeof(PackInfo));
 
-    // need sort by rank_info->scores & rank_info->rank_mode //
     pack_info->result_records = ranking(rank_info);
-    // need sort //
     pack_info->output_column_num = init_opt->output_column_num;
     pack_info->output_size = init_opt->output_size;
     pack_info->output_length = init_opt->output_length;

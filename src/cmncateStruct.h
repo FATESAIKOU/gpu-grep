@@ -93,8 +93,8 @@ typedef struct Packing_Info {
 // packer -> outpur
 typedef struct Result {
     ResultRec **result_records;
-    char **result_columns;
-    int result_records_num;
+    char **result_column;
+    int result_length;
     int result_column_num;
 } Result;
 

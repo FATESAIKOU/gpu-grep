@@ -37,32 +37,37 @@
 %%
 
 void getAttribute(char *str, int changing) {
+    int i;
     if (changing) {
         record_attr_counter = 0;
         records[++ record_counter] = (char**) malloc(sizeof(char*) * record_attr_num);
 
-        if (record_counter == record_limit) {
+        for (i = 0; i < COLUMN_NUM; i ++)
+            records[record_counter][i] = strdup("");
+
+        if (record_counter == record_limit - 1) {
             record_limit += 1024;
             records = (char***) realloc(records, sizeof(char**) * record_limit);
         }
     }
 
     content = strchr(str, ':') + 1;
+    free(records[record_counter][record_attr_counter]);
     records[record_counter][record_attr_counter ++] = strdup(content);
 }
 
 void readFile(char *filename, MatchBase *match_base) {
     record_limit = 1024;
-    record_attr_num = 12;
+    record_attr_num = COLUMN_NUM;
     record_counter = -1;
-    record_attr_counter = 12;
+    record_attr_counter = COLUMN_NUM;
     records = (char***) malloc(sizeof(char**) * record_limit);
 
     yyin = fopen(filename, "r");
 
     yylex();
 
-    records = (char***) realloc(records, sizeof(char**) * (record_counter + 1));
+    records = (char***) realloc(records, sizeof(char**) * record_counter);
     match_base->sample_records = records;
-    match_base->record_num = record_limit;
+    match_base->record_num = record_counter;
 }
