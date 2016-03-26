@@ -3,8 +3,6 @@
 
 Result *main(int argc, char *argv[])
 {
-    char *filename = argv[1];
-
     InitOpt *init_opt = (InitOpt*) parseArgs(argc, argv);
     printArgs((InitOpt*) init_opt);
 
@@ -14,23 +12,21 @@ Result *main(int argc, char *argv[])
     ThreadOpt *thread_opt = (ThreadOpt*) genThreadOpt(job_opt);
     printThreadArgs(thread_opt);
 
-    MatchOpt *match_opt = (MatchOpt*) genMatchOpt(thread_opt);
-    MatchBase *match_base = (MatchBase*) genMatchBase(filename);
+    // Gen by threadCtl
+    // MatchOpt *match_opt = (MatchOpt*) genMatchOpt(thread_opt);
+    // MatchBase *match_base = (MatchBase*) genMatchBase(init_opt->filename);
 
     // Gen by matching
-    MatchRes *match_res = (MatchRes*) matchRecords(match_opt, match_base);
+    // MatchRes *match_result = (MatchRes*) genMatchRes(match_opt, match_base);
 
     // Gen by threadCtl
-    RankInfo *rank_info = (RankInfo*) genRankInfo(match_res, init_opt);
+    // RankInfo *rank_info = (RankInfo*) genRankInfo(init_opt, match_base, match_result);
 
     // Gen by ranker
-    PackInfo *pack_info = (PackInfo*) genPackInfo(rank_info, init_opt);
+    // PackInfo *pack_info = (PackInfo*) genPackInfo(rank_info);
 
     // Gen by packer
-    Result *result = (Result*) genPackResult(pack_info);
-
-    printf("result %s\n", result->result_records[0]->record[0]);
-    printf("score %d\n", result->result_records[0]->score);
+    // Result *result = (Result*) genResult(pack_info);
 
     printf("success!!\n");
 

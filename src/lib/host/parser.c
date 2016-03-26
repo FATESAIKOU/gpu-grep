@@ -4,6 +4,7 @@
 InitOpt *genInitOpt() {
     InitOpt *sample = (InitOpt*) malloc(sizeof(InitOpt));
 
+    sample->filename          = NULL;
     sample->match_str         = NULL;
     sample->query_mode        = "single_word";
     sample->rank_mode         = "desc";
@@ -42,8 +43,9 @@ InitOpt *parseArgs(int argc, char *argv[]) {
     InitOpt *init_opt = genInitOpt();
 
     int cmd_opt = 0;
-    while ( (cmd_opt = getopt(argc, argv, "b:q:d:iL:r:O:S:wp")) != -1 ) {
+    while ( (cmd_opt = getopt(argc, argv, "f:b:q:d:iL:r:O:S:wp")) != -1 ) {
         switch (cmd_opt) {
+            case 'f': init_opt->filename = strdup(optarg); break;
             case 'b': init_opt->begin_at = strdup(optarg); break;
             case 'q': init_opt->query_mode = strdup(optarg); break;
             case 'd': init_opt->error_rate = atof(optarg); break;
@@ -76,6 +78,7 @@ int checkOpt(InitOpt *init_opt) {
 
 void printArgs(InitOpt *init_opt) {
     printf("----InitOpt----\n");
+    printf("\tfilename: %s\n", init_opt->filename);
     printf("\tmatch_str: %s\n", init_opt->match_str);
     printf("\tquery_mode: %s\n", init_opt->query_mode);
     printf("\trank_mode: %s\n", init_opt->rank_mode);
