@@ -1,5 +1,6 @@
 #ifndef CMN_INCLUDED
 #define CMN_INCLUDED
+#include <stdio.h>
 
 // some var defination
 #define COLUMN_NUM 11
@@ -44,13 +45,12 @@ typedef struct Thread_Ctl_Struct {
 } ThreadOpt;
 
 // threadCtl -> matching
-// Ps: matching: threadId = 1~255, scoring: threadId = 0.
 // 0. Single Record Info
 typedef struct Record_Info {
-    long int record_offset; // the offset of single record
+    long int record_offset;           // the offset of single record
     long int attr_offset[COLUMN_NUM]; // the offset of the record's attributes
-    int attr_num; // attribute num
-    int score; // score
+    int attr_num;                     // attribute num
+    int score;                        // score
 } RecordInfo;
 // 1. Control flags
 typedef struct Matching_Opt {
@@ -69,6 +69,7 @@ typedef struct Matching_Base {
     char *datas; // all the data base
     RecordInfo *record_info;
     int rec_entry;
+    size_t data_len;
 } MatchBase;
 
 // matching -> threadCtl

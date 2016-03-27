@@ -26,16 +26,17 @@ OUT = ./gpu-grep
 OBJ = ./
 
 $(OUT): main.c $(patsubst %, %.o, $(H_LIB) $(K_LIB) $(D_LIB))
-	$(CC) -g -o $@ $^ $(CUDA_LIB) $(LEX_LIB)
+	$(CC) -O3 -g -o $@ $^ $(CUDA_LIB)
+	rm -f *.o
 
 $(OBJ)/%.o: $(HOST)/%.c
-	$(CC) -g -c -o $@ $< $(CFLAGS)
+	$(CC) -O3 -g -c -o $@ $< $(CFLAGS)
 
-threadCtl.o: $(KERNEL)/threadCtl.c
-	$(CC) -g -c -o $@ $< $(LEX_LIB)
+threadCtl.o: $(KERNEL)/threadCtl.cu
+	$(NVCC) -O3 -g -c -o $@ $<
 
 matching.o: $(DEVICE)/matching.cu
-	$(NVCC) -g -c -o $@ $< $(CFLAGS)
+	$(NVCC) -O3 -g -c -o $@ $< $(CFLAGS)
 
 clean:
 	rm -f gpu-grep *.o

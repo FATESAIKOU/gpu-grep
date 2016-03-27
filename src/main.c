@@ -13,8 +13,8 @@ Result *main(int argc, char *argv[])
     printThreadArgs(thread_opt);
 
     // Gen by threadCtl
-    // MatchOpt *match_opt = (MatchOpt*) genMatchOpt(thread_opt);
-    // MatchBase *match_base = (MatchBase*) genMatchBase(init_opt->filename);
+    MatchOpt *match_opt = (MatchOpt*) genMatchOpt(thread_opt);
+    MatchBase *match_base = (MatchBase*) genMatchBase(thread_opt, init_opt->filename);
 
     // Gen by matching
     // MatchRes *match_result = (MatchRes*) genMatchRes(match_opt, match_base);

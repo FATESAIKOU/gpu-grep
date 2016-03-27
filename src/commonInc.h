@@ -1,9 +1,13 @@
 #ifndef COMMON_INCLUDED
 #define COMMON_INCLUDED
-#include <string.h>
+
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
-#include <ctype.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+#include <unistd.h>
+#include <string.h>
 
 #endif
