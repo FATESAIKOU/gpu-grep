@@ -4,7 +4,7 @@
 
 # GNU compilation info
 CC     = gcc
-INC    = -Iinc
+INC    = -lm
 CCFLAGS =
 
 # Nvidia compilation info
@@ -26,7 +26,7 @@ OUT = ./gpu-grep
 OBJ = ./
 
 $(OUT): main.c $(patsubst %, %.o, $(H_LIB) $(K_LIB) $(D_LIB))
-	$(CC) -O3 -g -o $@ $^ $(CUDA_LIB)
+	$(CC) -O3 -g -o $@ $^ $(CUDA_LIB) $(INC)
 	rm -f *.o
 
 $(OBJ)/%.o: $(HOST)/%.c

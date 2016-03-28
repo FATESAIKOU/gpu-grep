@@ -17,7 +17,7 @@ Result *main(int argc, char *argv[])
     MatchBase *match_base = (MatchBase*) genMatchBase(thread_opt, init_opt->filename);
 
     // Gen by matching
-    // MatchRes *match_result = (MatchRes*) genMatchRes(match_opt, match_base);
+    MatchRes *match_result = (MatchRes*) genMatchRes(match_opt, match_base);
 
     // Gen by threadCtl
     // RankInfo *rank_info = (RankInfo*) genRankInfo(init_opt, match_base, match_result);

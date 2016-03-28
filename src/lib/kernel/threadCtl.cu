@@ -10,6 +10,8 @@ RecordInfo *readRecordsInfo(char *file_content, char *begin, int *entry);
 char *readFile(char *filename, size_t *file_len);
 size_t getFileSize(char *filename);
 int getAttrId(char *str);
+void checkBase(MatchBase *match_base, int attr_num);
+
 
 MatchOpt *genMatchOpt(ThreadOpt *thread_opt) {
     MatchOpt *match_opt = (MatchOpt*) malloc(sizeof(MatchOpt));
@@ -45,6 +47,7 @@ RecordInfo *readRecordsInfo(char *file_content, char *begin, int *entry) {
 
     // initialize all of the record_info
     RecordInfo *records_info = (RecordInfo*) malloc(sizeof(RecordInfo) * limit);
+    memset(records_info, 0, sizeof(RecordInfo) * limit);
 
     char *attr = strtok(file_content, "\n");
     int record_id = 0;
@@ -106,6 +109,24 @@ int getAttrId(char *str) {
     }
 
     return -1;
+}
+
+void checkBase(MatchBase *match_base, int attr_num) {
+    char *base = match_base->datas;
+    RecordInfo *rec_info = match_base->record_info;
+    int rec_num = match_base->rec_entry;
+    int i, j;
+
+    int offset;
+    for (i = 0; i < rec_num; i ++) {
+        printf("Record %d---\n", i);
+        for (j = 0; j < attr_num; j ++) {
+            offset = rec_info[i].attr_offset[j];
+            if (offset != 0) {
+                printf("%s\n", base + offset);
+            }
+        }
+    }
 }
 
 }
