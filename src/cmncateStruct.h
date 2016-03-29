@@ -92,6 +92,7 @@ typedef struct Packing_Info {
     char *datas;
     RecordInfo *record_info;
     int rec_entry;
+    int output_length;
 } PackInfo;
 
 // packer -> return

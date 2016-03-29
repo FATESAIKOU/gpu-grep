@@ -8,5 +8,6 @@ char *readFile(char *filename);
 size_t getFileSize(char *filename);
 int getAttrId(char *str);
 void checkBase(MatchBase *match_base, int attr_num);
+RankInfo *genRankInfo(InitOpt *init_opt, MatchBase *match_base, MatchRes *match_result);
 
 #endif

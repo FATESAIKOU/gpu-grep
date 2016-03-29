@@ -11,6 +11,7 @@ char *readFile(char *filename, size_t *file_len);
 size_t getFileSize(char *filename);
 int getAttrId(char *str);
 void checkBase(MatchBase *match_base, int attr_num);
+RankInfo *genRankInfo(InitOpt *init_opt, MatchBase *match_base, MatchRes *match_result);
 
 
 MatchOpt *genMatchOpt(ThreadOpt *thread_opt) {
@@ -127,6 +128,17 @@ void checkBase(MatchBase *match_base, int attr_num) {
             }
         }
     }
+}
+
+RankInfo *genRankInfo(InitOpt *init_opt, MatchBase *match_base, MatchRes *match_result) {
+    RankInfo *rank_info = (RankInfo*) malloc(sizeof(RankInfo));
+
+    rank_info->datas = match_base->datas;
+    rank_info->record_info = match_result->record_info;
+    rank_info->rec_entry = match_result->rec_entry;
+    rank_info->rank_mode = init_opt->rank_mode;
+
+    return rank_info;
 }
 
 }

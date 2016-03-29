@@ -12,11 +12,11 @@ MatchRes *genMatchRes(MatchOpt *match_opt, MatchBase *match_base);
 RecordInfo *matching(MatchOpt *match_opt, MatchBase *match_base);
 char *loadFile(MatchOpt* match_opt, MatchBase *match_base);
 RecordInfo *loadRecord(MatchBase *match_base);
-int *getRecordScore(MatchOpt *match_opt, char *datas, RecordInfo *record_info, int rec_num);
+void getRecordScore(MatchOpt *match_opt, char *datas, RecordInfo *record_info, int rec_num);
 char **getMatchStrs(MatchOpt *match_opt);
 __global__ void gpuMatching(char *datas, RecordInfo *rec_info, char **match_strs, int str_num, int rec_num, int attr_num, int base);
-__device__ int d_strstr(char *a, char *b);
-__device__ int d_strlen(char *s);
+__device__ int d_strstr(const char *a, const char *b);
+__device__ int d_strlen(const char *s);
 
 
 MatchRes *genMatchRes(MatchOpt *match_opt, MatchBase *match_base) {
@@ -34,12 +34,15 @@ RecordInfo *matching(MatchOpt *match_opt, MatchBase *match_base) {
     char *device_datas = loadFile(match_opt, match_base);
     int rec_num = match_base->rec_entry;
 
-    // 2. get each attr score
+    // 2. get each record score
     getRecordScore(match_opt, device_datas, device_rec_info, rec_num);
-    cudaDeviceSynchronize();
+    cudaMemcpy(match_base->record_info, device_rec_info, sizeof(RecordInfo) * match_base->rec_entry, cudaMemcpyDeviceToHost);
+
+    // 3. free cuda memory
+    cudaFree(device_rec_info);
 
     // 4. return RecordInfo
-    return device_rec_info;
+    return match_base->record_info;
 }
 
 char *loadFile(MatchOpt* match_opt, MatchBase *match_base) {
@@ -55,28 +58,26 @@ char *loadFile(MatchOpt* match_opt, MatchBase *match_base) {
 
 RecordInfo *loadRecord(MatchBase *match_base) {
     RecordInfo *host_rec_info = match_base->record_info;
-    int rec_info_size = sizeof(RecordInfo) * match_base->rec_entry;
+    long unsigned int rec_info_size = sizeof(RecordInfo) * match_base->rec_entry;
 
     RecordInfo *device_rec_info;
-    cudaMallocManaged(&device_rec_info, rec_info_size);
-    memcpy(device_rec_info, host_rec_info, rec_info_size);
-
+    cudaMalloc(&device_rec_info, rec_info_size);
+    cudaMemcpy(device_rec_info, host_rec_info, rec_info_size, cudaMemcpyHostToDevice);
 
     return device_rec_info;
 }
 
-int *getRecordScore(MatchOpt *match_opt, char *datas, RecordInfo *record_info, int rec_num) {
+void getRecordScore(MatchOpt *match_opt, char *datas, RecordInfo *record_info, int rec_num) {
     // matching
     char **match_strs = getMatchStrs(match_opt);
     int match_str_num = match_opt->match_str_num;
     int base, round_limit = ceil(rec_num / (float) (BlockNum * ThreadNum));
     int i;
+
     for (i = 0; i < round_limit; i ++) {
         base = i * BlockNum * ThreadNum;
         gpuMatching<<<BlockNum, ThreadNum>>>(datas, record_info, match_strs, match_str_num, rec_num, COLUMN_NUM, base);
     }
-
-    return NULL;
 }
 
 char **getMatchStrs(MatchOpt *match_opt) {
@@ -102,25 +103,31 @@ char **getMatchStrs(MatchOpt *match_opt) {
 __global__ void gpuMatching(char *datas, RecordInfo *rec_info, char **match_strs, int str_num, int rec_num, int attr_num, int base) {
     int index = base + blockIdx.x * blockDim.x + threadIdx.x;
 
+    if (index >= rec_num) return;
+
     int i, j = 0;
     int offset;
 
-    RecordInfo *aim = rec_info + index;
+    RecordInfo *aim = &rec_info[index];
+    int score = 0;
     for (i = 0; i < attr_num; i ++) {
         for (j = 0; j < str_num; j ++) {
-            offset = rec_info[index].attr_offset[i];
-            while  ((offset = d_strstr(datas + offset, match_strs[j])) > 0) {
-                aim->score ++;
+            offset = aim->attr_offset[i];
+            while ((offset = d_strstr(datas + offset, match_strs[j])) >= 0) {
+                score = score + 1;
             }
         }
     }
+
+    aim->score = score;
 }
 
-__device__ int d_strstr(char *a, char *b) {
+__device__ int d_strstr(const char *a, const char *b) {
     int i, j;
     int a_len = d_strlen(a);
     int b_len = d_strlen(b);
     int loop_limit = a_len - b_len + 1;
+
 
     for (i = 0; i < loop_limit; i ++) {
         for (j = 0; j < b_len && a[i + j] == b[j]; j ++) ;
@@ -128,10 +135,10 @@ __device__ int d_strstr(char *a, char *b) {
         if (j == b_len) return i;
     }
 
-    return NULL;
+    return -1;
 }
 
-__device__ int d_strlen(char *s) {
+__device__ int d_strlen(const char *s) {
     int i = 0;
     while (s[i] != '\0') i ++;
 
