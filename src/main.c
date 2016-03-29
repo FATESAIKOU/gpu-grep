@@ -5,15 +5,12 @@ Result *main(int argc, char *argv[])
 {
     // gen by parser
     InitOpt *init_opt = (InitOpt*) parseArgs(argc, argv);
-    printArgs((InitOpt*) init_opt);
 
     // gen by init
     JobOpt *job_opt = (JobOpt*) setupJobArgs(init_opt);
-    printJobArgs((JobOpt*) job_opt);
 
     // gen by jobControl
     ThreadOpt *thread_opt = (ThreadOpt*) genThreadOpt(job_opt);
-    printThreadArgs(thread_opt);
 
     // Gen by threadCtl
     MatchOpt *match_opt = (MatchOpt*) genMatchOpt(thread_opt);
@@ -30,7 +27,6 @@ Result *main(int argc, char *argv[])
 
     // Gen by packer
     Result *result = (Result*) genResult(pack_info);
-
 
     return NULL;
 }
