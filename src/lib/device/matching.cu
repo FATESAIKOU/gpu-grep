@@ -22,6 +22,7 @@ __device__ int d_strlen(const char *s);
 MatchRes *genMatchRes(MatchOpt *match_opt, MatchBase *match_base) {
     MatchRes *match_result = (MatchRes*) malloc(sizeof(MatchRes));
 
+    cudaDeviceReset();
     match_result->record_info = matching(match_opt, match_base);
     match_result->rec_entry = match_base->rec_entry;
 
@@ -88,7 +89,7 @@ char **getMatchStrs(MatchOpt *match_opt) {
     int i, str_len;
     char *device_str;
     for (i = 0; i < match_str_num; i ++) {
-        str_len = strlen(match_opt->match_strs[i]);
+        str_len = strlen(match_opt->match_strs[i]) + 1;
         cudaMalloc(&device_str, sizeof(char) * str_len);
         cudaMemcpy(device_str, match_opt->match_strs[i], sizeof(char) * str_len, cudaMemcpyHostToDevice);
 

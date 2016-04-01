@@ -1,7 +1,7 @@
 #include "commonInc.h"
 #include "libs.h"
 
-Result *main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     // gen by parser
     InitOpt *init_opt = (InitOpt*) parseArgs(argc, argv);
@@ -28,5 +28,7 @@ Result *main(int argc, char *argv[])
     // Gen by packer
     Result *result = (Result*) genResult(pack_info);
 
-    return NULL;
+    printResult(result);
+
+    return 0;
 }
